@@ -73,6 +73,13 @@ namespace accumulator
 		args.GetReturnValue().Set(sum(*accumulatorSet));
 	}
 
+	void AccumulatorSet::Reset(const v8::FunctionCallbackInfo<v8::Value>& args)
+	{
+		v8::Isolate* isolate = args.GetIsolate();
+
+		AccumulatorSet* accumulator = Unwrap<AccumulatorSet>(args.Holder());
+		accumulator->accumulatorSet.reset(new accumulator_t(right_tail_cache_size = 20000));
+	}
 
 	void AccumulatorSet::Median(const v8::FunctionCallbackInfo<v8::Value>& args)
 	{
@@ -180,6 +187,7 @@ namespace accumulator
 		NODE_SET_PROTOTYPE_METHOD(tpl, "sumOfWeights", SumOfWeights);
 		NODE_SET_PROTOTYPE_METHOD(tpl, "min", Min);
 		NODE_SET_PROTOTYPE_METHOD(tpl, "max", Max);
+		NODE_SET_PROTOTYPE_METHOD(tpl, "reset", Reset);
 
 		constructor.Reset(isolate, tpl->GetFunction());
 		exports->Set(v8::String::NewFromUtf8(isolate, "AccumulatorSet"),

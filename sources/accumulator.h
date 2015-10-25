@@ -39,6 +39,7 @@ namespace accumulator
 		
 		static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
 		static void Accumulate(const v8::FunctionCallbackInfo<v8::Value>& args);
+		static void Reset(const v8::FunctionCallbackInfo<v8::Value>& args);
 		static v8::Persistent<v8::Function> constructor;
 
 		static void Mean(const v8::FunctionCallbackInfo<v8::Value>& args);
